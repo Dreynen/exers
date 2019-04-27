@@ -237,6 +237,7 @@ void view(Fastfood *first, int option)
 */
 {
 	if(first)
+	//	check if list is not NULL
 	{
 		if(option)
 		{
@@ -278,6 +279,7 @@ void view_ff(Fastfood *ptr)
 {
 	printf("%s\n", ptr -> name);
 	if(ptr -> first)
+	//	print food items if fastfood has list of items
 	{
 		for(Food_item *tmp = ptr -> first; tmp; tmp = tmp -> next)
 		{
@@ -289,7 +291,7 @@ void view_ff(Fastfood *ptr)
 
 Food_item * found_item(Fastfood *ff, char *name)
 /*
-	returns a food item pointer if it is found in list
+	returns a food item pointer item with same name is found in list
 	else returns NULL
 */
 {
@@ -312,13 +314,16 @@ void add_item(Fastfood *first)
 */
 {
 	if(first)
+	//	check if fastfood list is not NULL
 	{
 		char *name = get_string("Enter name of fastfood: ");
 		Fastfood *ff = found_ff(first, name);
 		if(ff)
+		//	check if fastfood exists
 		{
 			char *item_name = get_string("Enter name of food item: ");
 			if(!found_item(ff, item_name))
+			//	if item with same name is not in list yet
 			{
 				// allocate space for new food item node
 				Food_item *new = malloc(sizeof(Food_item));
@@ -400,10 +405,12 @@ void rm_ff(Fastfood ** first, int * count)
 */
 {
 	if(*first)
+	//	check if list is not NULL
 	{
 		char *name = get_string("Enter name of fastfood: ");
 		Fastfood *to_delete = found_ff(*first, name);
 		if(to_delete)
+		//	check if node to be deleted exists
 		{
 			rm_ff_node(first, to_delete);
 
@@ -465,6 +472,7 @@ void rm_item(Fastfood *first)
 /*	removes a specific food item from a fastfood if fastfood and food item exist */
 {
 	if(first)
+	//	check if fastfood list is not NULL
 	{
 		char *name = get_string("Enter name of fastfood: ");
 		Fastfood *ff = found_ff(first, name);
@@ -551,6 +559,7 @@ void deallocate(Fastfood **first)
 /* removes all fastfoods and their menus from linked list */
 {
 	while(*first)
+	// while list is not NULL
 	{
 		rm_ff_head(first);
 	}
@@ -561,6 +570,7 @@ void save(Fastfood *first, int count)
 {
 	FILE *file = fopen("fastfoods.txt", "w");
 	if(file)
+	//	check if file was opened properly
 	{
 		fprintf(file, "%d\n", count);
 		for(Fastfood *ptr = first; ptr; ptr = ptr -> next)
@@ -583,6 +593,7 @@ void load(Fastfood **first, int *count)
 {
 	FILE *file = fopen("fastfoods.txt", "r");
 	if(file)
+	// check if file was opened properly
 	{
 		fscanf(file, "%d\n", count);
 		for(int i = 0; i < (*count); i++)
