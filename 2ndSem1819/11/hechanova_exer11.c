@@ -25,8 +25,7 @@ int main(void)
 	while(1)
 	{
 		menu_out();
-		printf("Choice: ");
-		choice = get_int();
+		choice = get_int("Choice: ");
 
 		if(choice == 5)
 		{

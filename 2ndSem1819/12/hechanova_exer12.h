@@ -16,10 +16,11 @@ typedef struct Fastfood
 Fastfood;
 
 int switchboard(Fastfood **, int *);
-int get_int();
-float get_float();
-char * get_string();
+int get_int(char *);
+float get_float(char *);
+char * get_string(char *);
 void capitalize(char *);
+int compare_names(char *s, char *t);
 Fastfood * found_ff(Fastfood *, char *);
 void add_ff(Fastfood **, int *, int);
 void add_ff_head(Fastfood **, Fastfood *);
@@ -44,79 +45,80 @@ void load(Fastfood **, int *);
 
 int switchboard(Fastfood ** first, int *count)
 {
-    printf("[0] Add a Fastfood to Head\n");
-    printf("[1] Add a Fastfood to Tail\n");
-    printf("[2] View All Fastfood Chains\n");
-    printf("[3] View a Fastfood Chain\n");
-    printf("[4] Add an Item from Head\n");
-    printf("[5] Add an Item to Tail\n");
-    printf("[6] Remove a Fastfood from Head\n");
-    printf("[7] Remove a Fastfood from Tail\n");
-    printf("[8] Remove an Item from Head\n");
-    printf("[9] Remove an Item from Tail\n");
-    printf("[10] Exit\n");
-    printf("Choice: ");
-    int choice = get_int();
+    printf("[1] Add a Fastfood to Head\n");
+    printf("[2] Add a Fastfood to Tail\n");
+    printf("[3] View All Fastfood Chains\n");
+    printf("[4] View a Fastfood Chain\n");
+    printf("[5] Add an Item from Head\n");
+    printf("[6] Add an Item to Tail\n");
+    printf("[7] Remove a Fastfood from Head\n");
+    printf("[8] Remove a Fastfood from Tail\n");
+    printf("[9] Remove an Item from Head\n");
+    printf("[10] Remove an Item from Tail\n");
+    printf("[11] Exit\n");
+    int choice = get_int("Choice: ");
     switch(choice)
 	{
-		case 0:
+		case 1:
 			add_ff(first, count, 1);
 			break;
-		case 1:
+		case 2:
 			add_ff(first, count, 0);
 			break;
-		case 2:
+		case 3:
 			view(*first, 1);
 			break;
-		case 3:
+		case 4:
 			view(*first, 0);
 			break;
-		case 4:
+		case 5:
 			add_item(*first, 1);
 			break;
-		case 5:
+		case 6:
 			add_item(*first, 0);
 			break;
-		case 6:
+		case 7:
 			rm_ff(first, count, 1);
 			break;
-		case 7:
+		case 8:
 			rm_ff(first, count, 0);
 			break;
-		case 8:
+		case 9:
 			rm_item(*first, 1);
 			break;
-		case 9:
+		case 10:
 			rm_item(*first, 0);
 			break;
-		case 10:
+		case 11:
 			break;
 		default:
-			printf("0 - 10 only.\n");
+			printf("1 - 11 only.\n");
 	}
 
-	if(choice == 10)
+	if(choice == 11)
 	{
 		return 1;
 	}
 
 	return 0;
 }
-int get_int()
+int get_int(char *prompt)
 /* gets an integer from the user */
 {
 	int i;
+	printf("%s", prompt);
 	scanf("%d", &i);
 
 	return i;
 }
 
-float get_float()
-/* prompts user for positive integer */
+float get_float(char *prompt)
+/* prompts user for positive float */
 {
 	float f;
 	do
 	{
+		printf("%s", prompt);
 		scanf("%f", &f);
 		if(f < 0)
 		{
@@ -128,10 +130,11 @@ float get_float()
 	return f;
 }
 
-char * get_string()
+char * get_string(char * prompt)
 /* gets a string from the user */
 {
 	char s[45], *t;
+	printf("%s", prompt);
 	scanf("%s", s);
 	t = malloc(strlen(s) + 1);
 	strcpy(t, s);
@@ -148,6 +151,18 @@ void capitalize(char *s)
 	}
 }
 
+int compare_names(char *s, char *t)
+// returns a positive int if s comes alphabetically before t or zero if strings are the same word
+{
+	char namecpy0[30];
+	char namecpy1[30];
+	strcpy(namecpy0, s);
+	strcpy(namecpy1, t);
+	capitalize(namecpy0);
+	capitalize(namecpy1);
+
+	return strcmp(namecpy0, namecpy1);
+}
 
 Fastfood * found_ff(Fastfood *first, char *name)
 /*
@@ -155,17 +170,9 @@ Fastfood * found_ff(Fastfood *first, char *name)
 	is found in list else returns NULL
 */
 {
-	char namecpy0[30];
-	strcpy(namecpy0, name);
-	capitalize(namecpy0);
-
 	for(Fastfood *ptr = first; ptr; ptr = ptr -> next)
 	{
-		char namecpy1[30];
-		strcpy(namecpy1, ptr -> name);
-		capitalize(namecpy1);
-
-		if(!strcmp(namecpy0, namecpy1))
+		if(!compare_names(ptr -> name, name))
 		{
 			return ptr;
 		}
@@ -180,8 +187,7 @@ void add_ff(Fastfood **first, int * count, int option)
 	already in list, alloc new fastfood node if not found
 */
 {
-	printf("Enter name of fastfood: ");
-	char *name = get_string();
+	char *name = get_string("Enter name of fastfood: ");
 	if(!found_ff(*first, name))
 	{
 		// allocate space for new fastfood node
@@ -253,9 +259,7 @@ void view(Fastfood *first, int option)
 			view_all(first);
 		}
 		else
-		{
-			printf("Enter name of fastfood: ");
-			char *name = get_string();
+		{char *name = get_string("Enter name of fastfood: ");
 			Fastfood *ptr = found_ff(first, name);
 			if(ptr)
 			{
@@ -304,17 +308,9 @@ Food_item * found_item(Fastfood *ff, char *name)
 	else returns NULL
 */
 {
-	char namecpy0[30];
-	strcpy(namecpy0, name);
-	capitalize(namecpy0);
-
 	for(Food_item *tmp = ff -> first; tmp; tmp = tmp -> next)
 	{
-		char namecpy1[30];
-		strcpy(namecpy1, tmp -> name);
-		capitalize(namecpy1);
-
-		if(!strcmp(namecpy0, namecpy1))
+		if(!compare_names(tmp -> name, name))
 		{
 			return tmp;
 		}
@@ -332,20 +328,17 @@ void add_item(Fastfood *first, int option)
 {
 	if(first)
 	{
-		printf("Enter name of fastfood: ");
-		char *name = get_string();
+		char *name = get_string("Enter name of fastfood: ");
 		Fastfood *ff = found_ff(first, name);
 		if(ff)
 		{
-			printf("Enter name of food item: ");
-			char *item_name = get_string();
+			char *item_name = get_string("Enter name of food item: ");
 			if(!found_item(ff, item_name))
 			{
 				// allocate space for new food item node
 				Food_item *new = malloc(sizeof(Food_item));
 				strcpy(new -> name, item_name);
-				printf("Enter price: ");
-				new -> price = get_float();
+				new -> price = get_float("Enter price: ");
 				if(option)
 				{
 					// add food item to front of item linked list
@@ -480,8 +473,7 @@ void rm_item(Fastfood *first, int option)
 {
 	if(first)
 	{
-		printf("Enter name of fastfood: ");
-		char *name = get_string();
+		char *name = get_string("Enter name of fastfood: ");
 		Fastfood *ff = found_ff(first, name);
 		if(ff)
 		{
@@ -563,4 +555,53 @@ void rm_items(Fastfood *ff)
 void deallocate(Fastfood **first)
 /* removes all fastfoods and their menus from linked list */
 {
-	while(*...more
+	while(*first)
+	{
+		rm_ff_head(first);
+	}
+}
+
+void save(Fastfood *first, int count)
+/* saves data to a text file */
+{
+	FILE *file = fopen("fastfoods.txt", "w");
+	if(file)
+	{
+		fprintf(file, "%d\n", count);
+		for(Fastfood *ptr = first; ptr; ptr = ptr -> next)
+		{
+			fprintf(file, "%s %d\n", ptr -> name, ptr -> count);
+			for(Food_item *tmp = ptr -> first; tmp; tmp = tmp -> next)
+			{
+				fprintf(file, "%s %0.2f\n", tmp -> name, tmp -> price);
+			}
+		}
+		fclose(file);
+	}
+}
+
+void load(Fastfood **first, int *count)
+/*
+	loads count values from saved file, allocates fastfood and
+	food item nodes accordingly, and adds nodes to linked lists.
+*/
+{
+	FILE *file = fopen("fastfoods.txt", "r");
+	if(file)
+	{
+		fscanf(file, "%d\n", count);
+		for(int i = 0; i < (*count); i++)
+		{
+			Fastfood *new_ff = malloc(sizeof(Fastfood));
+			fscanf(file, "%s %d\n", new_ff -> name, &(new_ff -> count));
+			for(int j = 0; j < (new_ff -> count); j++)
+			{
+				Food_item *new_item = malloc(sizeof(Food_item));
+				fscanf(file, "%s %f\n", new_item -> name, &(new_item -> price));
+				add_item_tail(new_ff, new_item);
+			}
+			add_ff_tail(first, new_ff);
+		}
+		fclose(file);
+	}
+}

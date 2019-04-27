@@ -4,7 +4,7 @@ int get_int(char * prompt)
 	int n;
 	do
 	{
-		printf("%s");
+		printf("%s", prompt);
 		scanf("%d", &n);
 	}
 	while(n < 0);

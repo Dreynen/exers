@@ -36,7 +36,7 @@ int main(void)
 
 				for (int i = 0; i<size; i++)
 				{
-					a[i] = get_int("Enter array[%d]: ", i);
+					arr[i] = get_int("Enter number: ");
 				}
 
 				break;

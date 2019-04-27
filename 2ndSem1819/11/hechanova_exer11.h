@@ -11,12 +11,13 @@ typedef struct Fastfood
 	int item_count;
 }Fastfood;
 
-int get_int()
+int get_int(char *prompt)
 /* gets an int from the user */
 {
 	int n;
 	do
 	{
+		printf("%s", prompt);
 		scanf("%d", &n);
 		if(n < 0 || n > 5)
 		{
@@ -28,10 +29,11 @@ int get_int()
 	return n;
 }
 
-char * get_string()
+char * get_string(char *prompt)
 /* gets a string from the user */
 {
 	char s[100];
+	printf("%s", prompt);
 	scanf("%s", s);
 	char * t = malloc(strlen(s) + 1);
 	strcpy(t, s);
@@ -39,12 +41,13 @@ char * get_string()
 	return t;
 }
 
-float get_price()
+float get_price(char *prompt)
 /* gets a float from the user */
 {
 	float f;
 	do
 	{
+		printf("%s", prompt);
 		scanf("%f", &f);
 	}while(f < 0);
 
@@ -85,8 +88,7 @@ void add_ff(Fastfood ff_chain[50], int * ff_count)
 /* adds a fastfood */
 {
 	Fastfood new_ff;
-	printf("Enter fastfood name: ");
-	char * ff_name = get_string();
+	char * ff_name = get_string("Enter name of fastfood: ");
 
 	if(check_ff(ff_chain, *ff_count, ff_name) == -1)
 	{
@@ -131,20 +133,17 @@ int check_menu(Fastfood ff_chain, char * item_name)
 void add_item(Fastfood ff_chain[50], int ff_count)
 /* adds an item to the menu of a chosen fastfood */
 {
-	printf("Enter fastfood chain: ");
-	char * ff_name = get_string();
+	char * ff_name = get_string("Enter fastfood chain: ");
 	int index = check_ff(ff_chain, ff_count, ff_name);
 
 	if(index != -1)
 	{
 		Food_item item;
-		printf("Enter item name: ");
-		char * item_name = get_string();
+		char * item_name = get_string("Enter item name: ");
 		if(check_menu(ff_chain[index], item_name) == -1)
 		{
 			strcpy(item.name, item_name);
-			printf("Enter price: ");
-			item.price = get_price();
+			item.price = get_price("Enter price: ");
 			ff_chain[index].Menu[ff_chain[index].item_count] = item;
 			ff_chain[index].item_count++;
 		}
@@ -165,8 +164,7 @@ void add_item(Fastfood ff_chain[50], int ff_count)
 void view_menu(Fastfood ff_chain[50], int ff_count)
 /* outputs a fastfood name and its menu */
 {
-	printf("Enter fastfood chain: ");
-	char * ff_name = get_string();
+	char * ff_name = get_string("Enter fastfood chain: ");
 	int index = check_ff(ff_chain, ff_count, ff_name);
 
 	if(index != -1)
