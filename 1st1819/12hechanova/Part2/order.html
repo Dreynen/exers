@@ -1,0 +1,102 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Pizza Nova</title>
+    </head>
+
+    <body>
+        <img src="http://steviespizza.com/wp-content/uploads/2017/12/pizza-header.jpg" alt="Pizza banner" style="max-width: 100%; height: auto; width: auto;">
+		<div>
+			<form>
+				<fieldset>
+					<legend> Pizza Options </legend>
+		        	<div>
+						<label> Flavor:
+							<select id="flavor">
+								<option value="Meaty Hawaiian Supreme" class="choices"> Meaty Hawaiian Supreme </option>
+								<option value="Veggie Lovers" class="choices"> Veggie Lovers </option>
+								<option value="Bacon" class="choices"> Bacon </option>
+								<option value="Cheeseburger" class="choices"> Cheeseburger </option>
+								<option value="Mozza Crunch" class="choices"> Mozza Crunch </option>
+							</select>
+						</label>
+
+						<br><br>
+
+						<label>Size:</label>
+
+						<label>Small
+							<input type="radio" name="Size" value="Small" class="choices">
+						</label>
+						<label>Medium
+				    		<input type="radio" name="radio"value="radio" class="choices">
+						</label>
+						<label>Large
+							<input type="radio" name="radio" value="Large" class="choices">
+						</label>
+
+						<br><br>
+
+						<label> Extra Toppings:</label>
+						<label>Bacon
+   							<input type="checkbox" name="toppings" value ="Bacon">
+						</label>
+						<label>Cheese
+						    <input type="checkbox" name="toppings" value="Cheese">
+						</label>
+						<label>Onion
+							<input type="checkbox" name="toppings" value="Onion">
+						</label>
+						<label>Mushroom
+							<input type="checkbox" name="toppings" value="Mushroom">
+						</label>
+					</div>
+				</fieldset>
+
+			    <fieldset>
+			    	<legend> Customer Details </legend>
+					<div>
+						<table class="tableadj">
+							<tr>
+								<td>Customer Name:</td>
+								<td><input id="cname" type="text" name="customername"></td>
+							</tr>
+							<tr>
+								<td>Mobile Number:</td>
+								<td><input id="cnum" type="tel" name="customernum"></td>
+							</tr>
+							<tr>
+								<td>Email Address:</td>
+								<td><input id="cmail" type="email" name="customermail"></td>
+							</tr>
+						</table>
+					</div>
+				</fieldset>
+
+				<fieldset>
+					<legend> Delivery Details </legend>
+					<div>
+						<table>
+							<tr>
+								<td>Delivery Date:</td>
+								<td><input id="delidate" type="date" name="delidate"></td>
+							</tr>
+							<tr>
+								<td>Delivery Time:</td>
+								<td><input id="delitime" type="time" name="delitime"></td>
+							</tr>
+							<tr>
+								<td>Delivery Address:</td>
+							</tr>
+						</table>
+						<textarea id="address" rows="6" cols="36"></textarea>
+					</div>
+				</fieldset>
+			</form>
+
+			<button onclick="showdata()"> Show Data </button>
+	       	<button onclick="checkdata()"> Check Data </button>
+		</div>
+		<script src="order.js"></script>
+    </body>
+</html>
