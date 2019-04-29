@@ -493,6 +493,8 @@ void rm_item(Fastfood *first)
 				{
 					printf("\nFood item not found.\n\n");
 				}
+
+				free(item_name);
 			}
 			else
 			{
